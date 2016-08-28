@@ -648,11 +648,11 @@ a {
   border: 1px solid #24c1f6;
 }
 #header .header-nav .social a.linkedin {
-  background: url("/img/linkedin.png") center no-repeat #005a87;
-  border: 1px solid #005a87;
+  background: url("/img/linkedin.png") center no-repeat #e58072;
+  border: 1px solid #e58072;
 }
 #header .header-nav .social a.linkedin:hover {
-  border: 1px solid #006b98;
+  border: 1px solid #e58072;
 }
 #header .header-nav .social a.zhihu {
   background: url("/img/zhihu.png") center no-repeat #0078d8;

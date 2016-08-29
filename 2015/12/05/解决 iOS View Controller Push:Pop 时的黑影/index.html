@@ -4,17 +4,23 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Archives: 2016/8 | WeiTing Zhang&#39;s Blog</title>
+  <title>解决 iOS View Controller Push/Pop 时的黑影 | WeiTing Zhang&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="少点虚的，多点实践">
-<meta property="og:type" content="website">
-<meta property="og:title" content="WeiTing Zhang's Blog">
-<meta property="og:url" content="https://tate-zwt.github.io/archives/2016/08/index.html">
+  <meta name="description" content="项目收尾的时候发现在push时右上角会有黑影，push完成后就消失了，如图：
+那么如何解决这个问题呢？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决 iOS View Controller Push/Pop 时的黑影">
+<meta property="og:url" content="https://tate-zwt.github.io/2015/12/05/解决 iOS View Controller Push:Pop 时的黑影/index.html">
 <meta property="og:site_name" content="WeiTing Zhang's Blog">
-<meta property="og:description" content="少点虚的，多点实践">
+<meta property="og:description" content="项目收尾的时候发现在push时右上角会有黑影，push完成后就消失了，如图：
+那么如何解决这个问题呢？">
+<meta property="og:image" content="https://tate-zwt.github.io/images/frist.jpeg">
+<meta property="og:updated_time" content="2016-08-29T12:04:33.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WeiTing Zhang's Blog">
-<meta name="twitter:description" content="少点虚的，多点实践">
+<meta name="twitter:title" content="解决 iOS View Controller Push/Pop 时的黑影">
+<meta name="twitter:description" content="项目收尾的时候发现在push时右上角会有黑影，push完成后就消失了，如图：
+那么如何解决这个问题呢？">
+<meta name="twitter:image" content="https://tate-zwt.github.io/images/frist.jpeg">
   
     <link rel="alternative" href="/atom.xml" title="WeiTing Zhang&#39;s Blog" type="application/atom+xml">
   
@@ -79,7 +85,7 @@
 						<li>Links</li>
 						
 						
-						<li>About</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -196,49 +202,120 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-解决 iOS View Controller Push:Pop 时的黑影" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/08/28/hello-world/" class="archive-article-date">
-  	<time datetime="2016-08-28T05:21:20.000Z" itemprop="datePublished">8月 28</time>
+    <div class="article-meta">
+      <a href="/2015/12/05/解决 iOS View Controller Push:Pop 时的黑影/" class="article-date">
+  	<time datetime="2015-12-05T14:53:44.000Z" itemprop="datePublished">2015-12-05</time>
 </a>
-        </div>
-    	 
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/28/hello-world/">Hello World</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      解决 iOS View Controller Push/Pop 时的黑影
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
 
-        </div>
         <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
+      </div>
+      
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>项目收尾的时候发现在push时右上角会有黑影，push完成后就消失了，如图：<br><img src="/images/frist.jpeg" alt=""></p>
+<h3 id="那么如何解决这个问题呢？"><a href="#那么如何解决这个问题呢？" class="headerlink" title="那么如何解决这个问题呢？"></a>那么如何解决这个问题呢？</h3><a id="more"></a>
+<p>　　上网查询而知，iOS 自 7.x 某个版本以后就有这个问题。</p>
+<p>实际上很简单，如果这个<code>ViewController</code> 是在 <code>TabBarViewController</code> 的 <code>NavigationController</code> 上 <code>Push/Pop</code>的，那么只需要把 <code>TabBarViewController 的 View</code> 设置一下白色背景就可以了。</p>
+<p>建立一个 <code>UINavigationController</code> 的父类，在父类写上<code>self.view.backgroundColor = [UIColor whiteColor];</code>让你的<code>NavigationController</code>都继承，这样就OK了。</p>
+<p>　　但是到这里为止，只解决了 50%，还有另外一种情况没有解决，那就是如果你 <code>present</code>了一个<code>NavigationController + ViewController</code>后，在这个下面再进行<code>Pop/Push</code> 也是会有黑影的情况下。这种情况如何解决呢？</p>
+<p>类似的，设置一下 <code>self.navigationController.view.backgroundColor = [UIColor whiteColor];</code> 即可。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/02/02/iOS 集成极光推送，绕过一些坑/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          iOS 集成极光推送，绕过一些坑
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/11/15/iOS 代码格式化插件Clang-Format/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS 代码格式化插件Clang-Format</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="解决 iOS View Controller Push:Pop 时的黑影" data-title="解决 iOS View Controller Push/Pop 时的黑影" data-url="https://tate-zwt.github.io/2015/12/05/解决 iOS View Controller Push:Pop 时的黑影/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
 
 </div>
       <footer id="footer">
@@ -264,8 +341,8 @@
 		mathjax: true,
 		animate: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>iOS 集成极光推送，绕过一些坑 | WeiTing Zhang&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言最近公司要求把维护期的项目都集成极光推送，集成期间遇到一些小坑，特此在这总结！
+极光推送能干嘛？
+1.为 JPush Server 上报 Device Token，免除开发者管理 Device Token 的麻烦2.支持iOS APNs推送3.前台运行时，可接收由JPush下发的（透传的）自定义消息4.灵活管理接收用户：Tag（标签分组）、Alias（用户别名）、RegistrationID（">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 集成极光推送，绕过一些坑">
+<meta property="og:url" content="https://tate-zwt.github.io/2016/02/02/iOS 集成极光推送，绕过一些坑/index.html">
+<meta property="og:site_name" content="WeiTing Zhang's Blog">
+<meta property="og:description" content="前言最近公司要求把维护期的项目都集成极光推送，集成期间遇到一些小坑，特此在这总结！
+极光推送能干嘛？
+1.为 JPush Server 上报 Device Token，免除开发者管理 Device Token 的麻烦2.支持iOS APNs推送3.前台运行时，可接收由JPush下发的（透传的）自定义消息4.灵活管理接收用户：Tag（标签分组）、Alias（用户别名）、RegistrationID（">
+<meta property="og:image" content="https://tate-zwt.github.io/images/PushConfig.jpeg">
+<meta property="og:image" content="https://tate-zwt.github.io/images/测试推送.jpg">
+<meta property="og:updated_time" content="2016-08-29T12:00:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 集成极光推送，绕过一些坑">
+<meta name="twitter:description" content="前言最近公司要求把维护期的项目都集成极光推送，集成期间遇到一些小坑，特此在这总结！
+极光推送能干嘛？
+1.为 JPush Server 上报 Device Token，免除开发者管理 Device Token 的麻烦2.支持iOS APNs推送3.前台运行时，可接收由JPush下发的（透传的）自定义消息4.灵活管理接收用户：Tag（标签分组）、Alias（用户别名）、RegistrationID（">
+<meta name="twitter:image" content="https://tate-zwt.github.io/images/PushConfig.jpeg">
+  
+    <link rel="alternative" href="/atom.xml" title="WeiTing Zhang&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="//favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img src="/img/avatar.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">张威庭</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">iOS Developer</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						<li>Links</li>
+						
+						
+						<li>Über</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/Tate-zwt" title="github">github</a>
+					        
+								<a class="linkedin" target="_blank" href="http://www.jianshu.com/users/0b178bfe372a" title="linkedin">linkedin</a>
+					        
+								<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/tate-zhang" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">张威庭</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				
+					<img lazy-src="/img/avatar.jpg" class="js-avatar">
+				
+			</div>
+			<hgroup>
+			  <h1 class="header-author">张威庭</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">iOS Developer</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/Tate-zwt" title="github">github</a>
+			        
+						<a class="linkedin" target="_blank" href="http://www.jianshu.com/users/0b178bfe372a" title="linkedin">linkedin</a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/tate-zhang" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-iOS 集成极光推送，绕过一些坑" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/02/02/iOS 集成极光推送，绕过一些坑/" class="article-date">
+  	<time datetime="2016-02-02T13:23:54.000Z" itemprop="datePublished">2016-02-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS 集成极光推送，绕过一些坑
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>最近公司要求把维护期的项目都集成极光推送，集成期间遇到一些小坑，特此在这总结！</p>
+<h4 id="极光推送能干嘛？"><a href="#极光推送能干嘛？" class="headerlink" title="极光推送能干嘛？"></a>极光推送能干嘛？</h4><blockquote>
+<p>1.为 JPush Server 上报 Device Token，免除开发者管理 Device Token 的麻烦<br>2.支持iOS APNs推送<br>3.前台运行时，可接收由JPush下发的（透传的）自定义消息<br>4.灵活管理接收用户：Tag（标签分组）、Alias（用户别名）、RegistrationID（设备注册ID）<br><a id="more"></a><br>知道能干嘛了那就开始动手集成👌</p>
+</blockquote>
+<h4 id="配push证书："><a href="#配push证书：" class="headerlink" title="配push证书："></a>配push证书：</h4><p>此步骤直接看极光的 <a href="http://docs.jpush.io/client/ios_tutorials/#ios_1" target="_blank" rel="external">文档</a>即可,写得很详细😄</p>
+<h4 id="导入必要的框架"><a href="#导入必要的框架" class="headerlink" title="导入必要的框架"></a>导入必要的框架</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">CFNetwork.framework</div><div class="line">CoreFoundation.framework</div><div class="line">CoreTelephony.framework</div><div class="line">SystemConfiguration.framework</div><div class="line">CoreGraphics.framework</div><div class="line">Foundation.framework</div><div class="line">UIKit.framework</div><div class="line">Security.framework</div><div class="line">Xcode7需要的是libz.tbd；Xcode7以下版本是libz.dylib</div></pre></td></tr></table></figure>
+<h4 id="创建并配置PushConfig-plist文件"><a href="#创建并配置PushConfig-plist文件" class="headerlink" title="创建并配置PushConfig.plist文件"></a>创建并配置PushConfig.plist文件</h4><blockquote>
+<p>在你的工程中创建一个新的Property List文件，并将其命名为PushConfig.plist，文件所含字段如下：<br>CHANNEL<br>指明应用程序包的下载渠道，为方便分渠道统计，具体值由你自行定义，如：App Store。<br>APP_KEY<br>填写管理Portal上创建应用后自动生成的AppKey值。请确保应用内配置的 AppKey 与第1步在 Portal 上创建应用后生成的 AppKey 一致。<br>APS_FOR_PRODUCTION<br>1.3.1版本新增，用于标识当前应用所使用的APNs证书环境。<br>0 (默认值)表示采用的是开发证书，1 表示采用生产证书发布应用。<br>注：此字段的值要与Build Settings的Code Signing配置的证书环境一致。<br>在1.2.2或之前版本的配置文件中，有 TEST_MODE 这个键，新版的SDK不再使用，可以将它删除。</p>
+</blockquote>
+<p><img src="/images/PushConfig.jpeg" alt="PushConfig"></p>
+<h4 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h4><p>首先在<br>AppDelegate.m<br>导入</p>
+<p>#import “JPUSHService.h”<br>在对应的方法<br>didFinishLaunchingWithOptions<br>里贴上核心代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">//极光推送</div><div class="line">if ([[UIDevice currentDevice].systemVersion floatValue] &gt;= 8.0) &#123;</div><div class="line">//可以添加自定义categories</div><div class="line">[JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |</div><div class="line">UIUserNotificationTypeSound |</div><div class="line">UIUserNotificationTypeAlert)</div><div class="line">categories:nil];</div><div class="line">&#125; else &#123;</div><div class="line">//categories 必须为nil</div><div class="line">[JPUSHService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |</div><div class="line">UIRemoteNotificationTypeSound |</div><div class="line">UIRemoteNotificationTypeAlert)</div><div class="line">categories:nil];</div><div class="line">&#125;</div><div class="line">//JAppKey : 是你在极光推送申请下来的appKey Jchannel : 可以直接设置默认值即可 Publish channel</div><div class="line">[JPUSHService setupWithOption:launchOptions appKey:JAppKey</div><div class="line">channel:Jchannel apsForProduction:NO]; //如果是生产环境应该设置为YES</div></pre></td></tr></table></figure></p>
+<p>之后还需要加入以下方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken &#123;</div><div class="line">// Required</div><div class="line">[JPUSHService registerDeviceToken:deviceToken];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo&#123;</div><div class="line"></div><div class="line">NSString *alert = [[userInfo objectForKey:@&quot;aps&quot;] objectForKey:@&quot;alert&quot;];</div><div class="line"></div><div class="line">if (application.applicationState == UIApplicationStateActive) &#123;</div><div class="line"></div><div class="line">UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@&quot;推送消息&quot;</div><div class="line">message:alert</div><div class="line">delegate:self</div><div class="line">cancelButtonTitle:@&quot;OK&quot;</div><div class="line">otherButtonTitles:nil];</div><div class="line">[alertView show];</div><div class="line">&#125;</div><div class="line">[application setApplicationIconBadgeNumber:0];</div><div class="line"></div><div class="line">[JPUSHService handleRemoteNotification:userInfo];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们还能监听极光推送生命周期通知：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">API里面提供了下面 5 种类型的通知：</div><div class="line"></div><div class="line">extern NSString * const kJPFNetworkDidSetupNotification; // 建立连接</div><div class="line"></div><div class="line">extern NSString * const kJPFNetworkDidCloseNotification; // 关闭连接</div><div class="line"></div><div class="line">extern NSString * const kJPFNetworkDidRegisterNotification; // 注册成功</div><div class="line"></div><div class="line">extern NSString * const kJPFNetworkDidLoginNotification; // 登录成功</div><div class="line"></div><div class="line">温馨提示： </div><div class="line">Registration id 需要在执行到kJPFNetworkDidLoginNotification的方法里获取</div><div class="line"></div><div class="line">extern NSString * const kJPFNetworkDidReceiveMessageNotification; // 收到自定义消息(非APNS)</div><div class="line"></div><div class="line">其中，kJPFNetworkDidReceiveMessageNotification传递的数据可以通过NSNotification中的userInfo方法获取，包括标题、内容、extras信息等</div></pre></td></tr></table></figure></p>
+<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><h6 id="Tag（标签分组）-amp-Alias（用户别名）"><a href="#Tag（标签分组）-amp-Alias（用户别名）" class="headerlink" title="Tag（标签分组）&amp; Alias（用户别名）"></a>Tag（标签分组）&amp; Alias（用户别名）</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//用于绑定Tag的 根据自己想要的Tag加入，值得注意的是这里Tag需要用到NSSet</div><div class="line">[JPUSHService setTags:[NSSet set]callbackSelector:nil object:self];</div><div class="line">//用于绑定Alias的  使用NSString 即可</div><div class="line">[JPUSHService setAlias:@&quot;&quot; callbackSelector:nil object:self];</div></pre></td></tr></table></figure>
+<p>如果想要即要绑定Alias也要绑定Tag,必须使用以下方法，已被坑<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//用于同时绑定Tag与Alias的</div><div class="line">[JPUSHService setTags:[NSSet set] alias:@&quot;&quot; callbackSelector:nil target:self];</div></pre></td></tr></table></figure></p>
+<h6 id="一般在项目哪里绑定呢？"><a href="#一般在项目哪里绑定呢？" class="headerlink" title="一般在项目哪里绑定呢？"></a>一般在项目哪里绑定呢？</h6><p>我主要是在项目的登录成功或者自动登录后，使用用户的唯一标示进行绑定，或者根据需求添加一些前缀</p>
+<h6 id="去除绑定"><a href="#去除绑定" class="headerlink" title="去除绑定"></a>去除绑定</h6><p>用户进行退出登录的方法里添加去除绑定即可，值得注意的是用到即时通讯的话，被挤下线也要去除绑定，已被坑，贴代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//没有值就代表去除</div><div class="line">[JPUSHService setTags:[NSSet set]callbackSelector:nil object:self];</div><div class="line">[JPUSHService setAlias:@&quot;&quot; callbackSelector:nil object:self];</div><div class="line">[JPUSHService setTags:[NSSet set] alias:@&quot;&quot; callbackSelector:nil target:self];</div></pre></td></tr></table></figure></p>
+<h4 id="测试是否集成成功"><a href="#测试是否集成成功" class="headerlink" title="测试是否集成成功"></a>测试是否集成成功</h4><p>到极光<a href="https://www.jpush.cn/push/apps/c8d9798cc63b93bf2c1ed834/push/notification/" target="_blank" rel="external">平台</a>测试推送：</p>
+<p><img src="/images/测试推送.jpg" alt="测试推送"><br>只要推送成功，剩下的由后台根据Alias或者Tag来推送就可以了😄</p>
+<h4 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h4><p>关于推送来的小红点角标，简称badge。默认是极光推送过来一次角标+1，这个值badge是由后台推送过来的消息传的值，但是当用户看了，角标会默认被清除，如果你没有去告诉后台的话，后台下次推送过来，你的badge显示的值还是你上一次的值加一，那如何解决这个问题呢？<br>细心的开发者会去查看极光推送的API文档，但是我觉得看文档就有点麻烦了，所以我直接去看<code>JPUSHService.h</code>文件，所以我发现极光为这个问题提供了解决的方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">/*!</div><div class="line">* @abstract 设置角标(到服务器)</div><div class="line">*</div><div class="line">* @param value 新的值. 会覆盖服务器上保存的值(这个用户)</div><div class="line">*</div><div class="line">* @discussion 本接口不会改变应用本地的角标值.</div><div class="line">* 本地仍须调用 UIApplication:setApplicationIconBadgeNumber 函数来设置脚标.</div><div class="line">*</div><div class="line">* 本接口用于配合 JPush 提供的服务器端角标功能.</div><div class="line">* 该功能解决的问题是, 服务器端推送 APNs 时, 并不知道客户端原来已经存在的角标是多少, 指定一个固定的数字不太合理.</div><div class="line">*</div><div class="line">* JPush 服务器端脚标功能提供:</div><div class="line">*</div><div class="line">* - 通过本 API 把当前客户端(当前这个用户的) 的实际 badge 设置到服务器端保存起来;</div><div class="line">* - 调用服务器端 API 发 APNs 时(通常这个调用是批量针对大量用户),</div><div class="line">*   使用 &quot;+1&quot; 的语义, 来表达需要基于目标用户实际的 badge 值(保存的) +1 来下发通知时带上新的 badge 值;</div><div class="line">*/</div><div class="line">+ (BOOL)setBadge:(NSInteger)value;</div></pre></td></tr></table></figure></p>
+<p>而且我还发现极光推送也能收集Crash日志,之前只知道友盟与听云<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">/*!</div><div class="line">* @abstract 开启Crash日志收集</div><div class="line">*</div><div class="line">* @discussion 默认是关闭状态.</div><div class="line">*/</div><div class="line">+ (void)crashLogON;</div></pre></td></tr></table></figure></p>
+<p>如何改变推送过来的提示音呢？<br>只需要让服务端设置sound字段就可以了。</p>
+<blockquote>
+<p>iOS 通知声音 (sound)<br>APNs通知，通过这个字段指定声音。默认为default，即系统默认声音。<br>如果设置为空值，则为静音。<br>如果设置为特殊的名称，则需要你的App里配置了该声音才可以正常。</p>
+</blockquote>
+<h4 id="JPushSDK资源下载"><a href="#JPushSDK资源下载" class="headerlink" title="JPushSDK资源下载"></a><a href="http://docs.jpush.io/resources/" target="_blank" rel="external">JPushSDK资源下载</a></h4>
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/02/11/iOS一行代码集成上下拉逻辑/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          iOS一行代码集成上下拉逻辑
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/12/05/解决 iOS View Controller Push:Pop 时的黑影/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">解决 iOS View Controller Push/Pop 时的黑影</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="iOS 集成极光推送，绕过一些坑" data-title="iOS 集成极光推送，绕过一些坑" data-url="https://tate-zwt.github.io/2016/02/02/iOS 集成极光推送，绕过一些坑/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 张威庭
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: /
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

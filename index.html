@@ -79,7 +79,7 @@
 						<li>Links</li>
 						
 						
-						<li>About</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -198,11 +198,11 @@
 
       <div class="body-wrap">
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-iOS Runtime特性之关联对象" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/08/28/hello-world/" class="article-date">
-  	<time datetime="2016-08-28T05:21:20.000Z" itemprop="datePublished">2016-08-28</time>
+      <a href="/2016/04/17/iOS Runtime特性之关联对象/" class="article-date">
+  	<time datetime="2016-04-17T14:38:28.000Z" itemprop="datePublished">2016-04-17</time>
 </a>
     </div>
   
@@ -215,7 +215,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/28/hello-world/">Hello World</a>
+      <a class="article-title" href="/2016/04/17/iOS Runtime特性之关联对象/">iOS Runtime特性之关联对象</a>
     </h1>
   
 
@@ -224,15 +224,410 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>现在你准备用一个系统的类或者是你写的类，但是这个类并不能满足你的需求，你需要额外添加一个属性。<br>一般解决办法要么是 extends(继承)，要么使用 category(类别)。<br>而我并不推荐使用 extends ，主要是耦合性太强，一般我使用 category 。<br>我们都知道，分类中是无法设置属性的，如果在分类的声明中写@property 只能为其生成get 和 set 方法的声明，<br>但是有时候使用类别也需要增加一个额外属性，<br>那么怎么办呢？<br>这个时候，runtime的关联属性就能发挥它的作用了。<br>一般都是key value 的存在。<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/04/17/iOS Runtime特性之关联对象/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-iOS Develop Tips" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/20/iOS Develop Tips/" class="article-date">
+  	<time datetime="2016-03-20T12:23:45.000Z" itemprop="datePublished">2016-03-20</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/20/iOS Develop Tips/">iOS Develop Tips</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>记录一些常用到的代码块 -&gt; self command C+V😄  continuous updating!</p>
+<h5 id="Objective-C-tips"><a href="#Objective-C-tips" class="headerlink" title="Objective-C tips"></a>Objective-C tips</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//使控件从导航栏以下开始</div><div class="line">self.edgesForExtendedLayout=UIRectEdgeNone;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//将navigation返回按钮文字position设置不在屏幕上显示</div><div class="line">[[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(NSIntegerMin, NSIntegerMin) forBarMetrics:UIBarMetricsDefault];</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//解决ScrollView等在viewController无法滚动到最顶部</div><div class="line">//自动滚动调整，默认为YES</div><div class="line">self.automaticallyAdjustsScrollViewInsets = NO;</div></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/03/20/iOS Develop Tips/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-iOS播放GIF动画的几种方式" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/02/iOS播放GIF动画的几种方式/" class="article-date">
+  	<time datetime="2016-03-02T14:05:04.000Z" itemprop="datePublished">2016-03-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/02/iOS播放GIF动画的几种方式/">iOS播放GIF动画的几种方式</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="1-使用UIWebView播放"><a href="#1-使用UIWebView播放" class="headerlink" title="1.使用UIWebView播放"></a>1.使用UIWebView播放</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">#pragma clang diagnostic ignored &quot;-Wnonnull&quot;</div><div class="line">NSString *path = [[NSBundle mainBundle] pathForResource:@&quot;&lt;#gifName#&gt;&quot; ofType:@&quot;gif&quot;];</div><div class="line">NSData *gifData = [NSData dataWithContentsOfFile:path];</div><div class="line">UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(&lt;#x#&gt;, &lt;#y#&gt;, &lt;#w#&gt;, &lt;#h#&gt;)];</div><div class="line">webView.scalesPageToFit = YES;</div><div class="line">[webView loadData:gifData MIMEType:@&quot;image/gif&quot; textEncodingName:nil baseURL:nil];</div><div class="line">webView.backgroundColor = [UIColor clearColor];</div><div class="line">webView.opaque = NO;</div><div class="line">[self.view addSubview:webView];</div></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/03/02/iOS播放GIF动画的几种方式/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-iOS一行代码集成上下拉逻辑" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/02/11/iOS一行代码集成上下拉逻辑/" class="article-date">
+  	<time datetime="2016-02-11T11:23:44.000Z" itemprop="datePublished">2016-02-11</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/11/iOS一行代码集成上下拉逻辑/">iOS一行代码集成上下拉逻辑</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>通常我们为了方便集成上拉下拉都会使用一些第三方的框架，但是它们大多只是提供了一些回调，初学者还是要写两个方法，分别是第一次加载与更多加载，在此，我分享下我平时项目里怎么去处理的。</p>
+<h4 id="WTNetworkingRefreshManager"><a href="#WTNetworkingRefreshManager" class="headerlink" title="WTNetworkingRefreshManager"></a>WTNetworkingRefreshManager</h4><p>这个是我自己封装的工具类，适用于UITableview、UICollectionView.<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/02/11/iOS一行代码集成上下拉逻辑/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-iOS 集成极光推送，绕过一些坑" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/02/02/iOS 集成极光推送，绕过一些坑/" class="article-date">
+  	<time datetime="2016-02-02T13:23:54.000Z" itemprop="datePublished">2016-02-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/02/iOS 集成极光推送，绕过一些坑/">iOS 集成极光推送，绕过一些坑</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>最近公司要求把维护期的项目都集成极光推送，集成期间遇到一些小坑，特此在这总结！</p>
+<h4 id="极光推送能干嘛？"><a href="#极光推送能干嘛？" class="headerlink" title="极光推送能干嘛？"></a>极光推送能干嘛？</h4><blockquote>
+<p>1.为 JPush Server 上报 Device Token，免除开发者管理 Device Token 的麻烦<br>2.支持iOS APNs推送<br>3.前台运行时，可接收由JPush下发的（透传的）自定义消息<br>4.灵活管理接收用户：Tag（标签分组）、Alias（用户别名）、RegistrationID（设备注册ID）<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/02/02/iOS 集成极光推送，绕过一些坑/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-解决 iOS View Controller Push:Pop 时的黑影" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/12/05/解决 iOS View Controller Push:Pop 时的黑影/" class="article-date">
+  	<time datetime="2015-12-05T14:53:44.000Z" itemprop="datePublished">2015-12-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/05/解决 iOS View Controller Push:Pop 时的黑影/">解决 iOS View Controller Push/Pop 时的黑影</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>项目收尾的时候发现在push时右上角会有黑影，push完成后就消失了，如图：<br><img src="/images/frist.jpeg" alt=""></p>
+<h3 id="那么如何解决这个问题呢？"><a href="#那么如何解决这个问题呢？" class="headerlink" title="那么如何解决这个问题呢？"></a>那么如何解决这个问题呢？</h3>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/12/05/解决 iOS View Controller Push:Pop 时的黑影/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-iOS 代码格式化插件Clang-Format" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/11/15/iOS 代码格式化插件Clang-Format/" class="article-date">
+  	<time datetime="2015-11-15T13:53:44.000Z" itemprop="datePublished">2015-11-15</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/15/iOS 代码格式化插件Clang-Format/">iOS 代码格式化插件Clang-Format</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近我在接手同事的项目，发现项目经过多人手后，每人个的代码格式风格又有点差异导致代码显示很乱，Google了一番，发现有一个iOS代码格式插件<a href="https://github.com/travisjeffery/ClangFormat-Xcode">Clang-Format</a>，相当的给力。</p>
+<p>配置CLangFormat<br>虽然CLangFormat本身就内置了一些标准化的代码格式化方案，但是同样可以自定义，我们就采用了自定义的方法。</p>
+<p>具体的，在工程目录或者workspace目录下创建一个”.clang-format”文件</p>
+<p>.clang-format 只是一个配置文件，可以复制到任何地方。你可以把它复制到你的项目的根目录，也可以把它复制到你所有项目的根目录。<br>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/11/15/iOS 代码格式化插件Clang-Format/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-Xcode清理缓存、清理多余provisioning-profile-证书" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/10/05/Xcode清理缓存、清理多余provisioning-profile-证书/" class="article-date">
+  	<time datetime="2015-10-05T12:53:44.000Z" itemprop="datePublished">2015-10-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/05/Xcode清理缓存、清理多余provisioning-profile-证书/">Xcode清理缓存、清理多余provisioning profile 证书</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我们开发久了，Xcode的缓存会越来越大，主要是会产生很多项目编译缓存，占用一大堆硬盘空间，这个时候就要清理了。笔者有次清理出20多G的空间，这是相当给力的，你也可以试试哈😄。还有开发多款APP后可能会产生多余的证书provisioning profile，这个时候也是要清理的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1、清理Xcode编译项目产生的缓存垃圾</div><div class="line"></div><div class="line">手动删除：</div><div class="line"></div><div class="line">打开菜单的前往-&gt;前往文件夹输入—&gt; ~/Library/Developer/Xcode/DerivedData</div><div class="line"></div><div class="line">2、删除Xcode中多余的证书provisioning profile</div><div class="line"></div><div class="line">手动删除：</div><div class="line"></div><div class="line">打开菜单的前往-&gt;前往文件夹输入—&gt; ~/Library/MobileDevice/Provisioning Profiles</div></pre></td></tr></table></figure></p>
+<p>这样对于使用128G的固态MacPro 清理出一定的空间是相当有用的！</p>
 
       
     </div>

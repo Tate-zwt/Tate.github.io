@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="runtime," />
 
 
 
@@ -92,7 +92,7 @@
 <meta property="og:url" content="https://tate-zwt.github.io/2016/04/17/iOS Runtime特性之关联对象/index.html">
 <meta property="og:site_name" content="WeiTing Zhang's Blog">
 <meta property="og:description" content="前言现在你准备用一个系统的类或者是你写的类，但是这个类并不能满足你的需求，你需要额外添加一个属性。一般解决办法要么是 extends(继承)，要么使用 category(类别)。而我并不推荐使用 extends ，主要是耦合性太强，一般我使用 category 。我们都知道，分类中是无法设置属性的，如果在分类的声明中写@property 只能为其生成get 和 set 方法的声明，但是有时候使用类">
-<meta property="og:updated_time" content="2016-08-29T12:02:44.000Z">
+<meta property="og:updated_time" content="2016-08-31T05:17:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS Runtime特性之关联对象">
 <meta name="twitter:description" content="前言现在你准备用一个系统的类或者是你写的类，但是这个类并不能满足你的需求，你需要额外添加一个属性。一般解决办法要么是 extends(继承)，要么使用 category(类别)。而我并不推荐使用 extends ，主要是耦合性太强，一般我使用 category 。我们都知道，分类中是无法设置属性的，如果在分类的声明中写@property 只能为其生成get 和 set 方法的声明，但是有时候使用类">
@@ -289,7 +289,7 @@
 <p>.h文件</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#import &lt;UIKit/UIKit.h&gt;</div><div class="line">@interface UIView (WT)</div><div class="line">typedef void (^GestureActionBlock)(UIGestureRecognizer *ges);</div><div class="line">/** 单点击手势 */</div><div class="line">- (void)tapGesture:(GestureActionBlock)block;</div><div class="line">/** 长按手势 */</div><div class="line">- (void)longPressGestrue:(GestureActionBlock)block;</div><div class="line">@end</div></pre></td></tr></table></figure>
 <p>.m文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">#import &quot;UIView+WT.h&quot;</div><div class="line">#import &lt;objc/runtime.h&gt;</div><div class="line">@implementation UIView (WT)</div><div class="line"></div><div class="line">static char kActionHandlerTapBlockKey;</div><div class="line">static char kActionHandlerTapGestureKey;</div><div class="line">static char kActionHandlerLongPressBlockKey;</div><div class="line">static char kActionHandlerLongPressGestureKey;</div><div class="line"></div><div class="line">//单点击手势</div><div class="line">- (void)tapGesture:(GestureActionBlock)block &#123;</div><div class="line">self.userInteractionEnabled = YES;</div><div class="line">UITapGestureRecognizer *gesture = objc_getAssociatedObject(self, &amp;kActionHandlerTapGestureKey);</div><div class="line">if (!gesture) &#123;</div><div class="line">gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleActionForTapGesture:)];</div><div class="line">[self addGestureRecognizer:gesture];</div><div class="line">objc_setAssociatedObject(self, &amp;kActionHandlerTapGestureKey, gesture, OBJC_ASSOCIATION_RETAIN);</div><div class="line">&#125;</div><div class="line">objc_setAssociatedObject(self, &amp;kActionHandlerTapBlockKey, block, OBJC_ASSOCIATION_COPY);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)handleActionForTapGesture:(UITapGestureRecognizer *)gesture &#123;</div><div class="line">if (gesture.state == UIGestureRecognizerStateRecognized) &#123;</div><div class="line">GestureActionBlock block = objc_getAssociatedObject(self, &amp;kActionHandlerTapBlockKey);</div><div class="line">if (block) &#123;</div><div class="line">block(gesture);</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//长按手势</div><div class="line">- (void)longPressGestrue:(GestureActionBlock)block &#123;</div><div class="line">self.userInteractionEnabled = YES;</div><div class="line">UILongPressGestureRecognizer *gesture = objc_getAssociatedObject(self, &amp;kActionHandlerLongPressGestureKey);</div><div class="line">if (!gesture) &#123;</div><div class="line">gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleActionForLongPressGesture:)];</div><div class="line">[self addGestureRecognizer:gesture];</div><div class="line">objc_setAssociatedObject(self, &amp;kActionHandlerLongPressGestureKey, gesture, OBJC_ASSOCIATION_RETAIN);</div><div class="line">&#125;</div><div class="line">objc_setAssociatedObject(self, &amp;kActionHandlerLongPressBlockKey, block, OBJC_ASSOCIATION_COPY);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)handleActionForLongPressGesture:(UITapGestureRecognizer *)gesture &#123;</div><div class="line">if (gesture.state == UIGestureRecognizerStateBegan) &#123;</div><div class="line">GestureActionBlock block = objc_getAssociatedObject(self, &amp;kActionHandlerLongPressBlockKey);</div><div class="line">if (block) &#123;</div><div class="line">block(gesture);</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure></p>
-<p>我解释下里面的一些关键字段，比如<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">```</div><div class="line">typedef OBJC_ENUM(uintptr_t, objc_AssociationPolicy) &#123;</div><div class="line">OBJC_ASSOCIATION_ASSIGN = 0,           /**&lt; Specifies a weak reference to the associated object. */</div><div class="line">OBJC_ASSOCIATION_RETAIN_NONATOMIC = 1, /**&lt; Specifies a strong reference to the associated object. </div><div class="line">*   The association is not made atomically. */</div><div class="line">OBJC_ASSOCIATION_COPY_NONATOMIC = 3,   /**&lt; Specifies that the associated object is copied. </div><div class="line">*   The association is not made atomically. */</div><div class="line">OBJC_ASSOCIATION_RETAIN = 01401,       /**&lt; Specifies a strong reference to the associated object.</div><div class="line">*   The association is made atomically. */</div><div class="line">OBJC_ASSOCIATION_COPY = 01403          /**&lt; Specifies that the associated object is copied.</div><div class="line">*   The association is made atomically. */</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>我解释下里面的一些关键字段，比如 OBJC_ASSOCIATION_RETAIN 这个字段实际上是个枚举来的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">typedef OBJC_ENUM(uintptr_t, objc_AssociationPolicy) &#123;</div><div class="line">OBJC_ASSOCIATION_ASSIGN = 0,           /**&lt; Specifies a weak reference to the associated object. */</div><div class="line">OBJC_ASSOCIATION_RETAIN_NONATOMIC = 1, /**&lt; Specifies a strong reference to the associated object. </div><div class="line">*   The association is not made atomically. */</div><div class="line">OBJC_ASSOCIATION_COPY_NONATOMIC = 3,   /**&lt; Specifies that the associated object is copied. </div><div class="line">*   The association is not made atomically. */</div><div class="line">OBJC_ASSOCIATION_RETAIN = 01401,       /**&lt; Specifies a strong reference to the associated object.</div><div class="line">*   The association is made atomically. */</div><div class="line">OBJC_ASSOCIATION_COPY = 01403          /**&lt; Specifies that the associated object is copied.</div><div class="line">*   The association is made atomically. */</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 <p>用法跟<code>@property</code>中的<code>strong 、weak、copy 、assign 、retain</code>等声明属性的修饰符一样，我上面用到了<code>block</code>就对应<code>OBJC_ASSOCIATION_COPY</code>,而<code>UITapGestureRecognizer</code>与<code>UILongPressGestureRecognizer</code>则对应<code>OBJC_ASSOCIATION_RETAIN</code>进行修饰。<br>当然实际上我的<code>UIView</code>的<code>category</code>不止这些，可以参考我开发项目总结的一套库<br><a href="https://github.com/Tate-zwt/WTSDK" target="_blank" rel="external">WTSDK</a><br>可能有些地方描述得不是很好，或者描述错误了，希望你们能给我留言，thank！</p>
 
       
@@ -310,6 +310,12 @@
     </div>
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/runtime/" rel="tag">#runtime</a>
+          
+        </div>
       
 
       
@@ -397,6 +403,13 @@
 
           
 
+          
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
           
 
         </nav>

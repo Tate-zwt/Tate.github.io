@@ -1,0 +1,596 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="WeiTing Zhang's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="前言这一段时间比较忙，主要公司的产品需要重构与加多一个货币支付系统。说到移动端的支付，自然会牵扯到支付这一块。支付这一块主流的目前就微信、支付宝、银联。做过这些SDK集成的开发者都知道，集成相对复杂，而且要花大量的时间去阅读他们提供的开发文档，不过还好现在有很多开发者都分享了他们的集成心得，使这件事越发简单，比如：iOS支付[支付宝、银联、微信]、10分钟搞定支付宝和微信支付 的 各种填坑等等，但">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS集成Ping++支付,绕过一些坑">
+<meta property="og:url" content="https://tate-zwt.github.io/2016/08/31/iOS集成Ping++支付,绕过一些坑/index.html">
+<meta property="og:site_name" content="WeiTing Zhang's Blog">
+<meta property="og:description" content="前言这一段时间比较忙，主要公司的产品需要重构与加多一个货币支付系统。说到移动端的支付，自然会牵扯到支付这一块。支付这一块主流的目前就微信、支付宝、银联。做过这些SDK集成的开发者都知道，集成相对复杂，而且要花大量的时间去阅读他们提供的开发文档，不过还好现在有很多开发者都分享了他们的集成心得，使这件事越发简单，比如：iOS支付[支付宝、银联、微信]、10分钟搞定支付宝和微信支付 的 各种填坑等等，但">
+<meta property="og:image" content="https://tate-zwt.github.io/images/SDK包.png">
+<meta property="og:updated_time" content="2016-08-31T11:17:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS集成Ping++支付,绕过一些坑">
+<meta name="twitter:description" content="前言这一段时间比较忙，主要公司的产品需要重构与加多一个货币支付系统。说到移动端的支付，自然会牵扯到支付这一块。支付这一块主流的目前就微信、支付宝、银联。做过这些SDK集成的开发者都知道，集成相对复杂，而且要花大量的时间去阅读他们提供的开发文档，不过还好现在有很多开发者都分享了他们的集成心得，使这件事越发简单，比如：iOS支付[支付宝、银联、微信]、10分钟搞定支付宝和微信支付 的 各种填坑等等，但">
+<meta name="twitter:image" content="https://tate-zwt.github.io/images/SDK包.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://tate-zwt.github.io/2016/08/31/iOS集成Ping++支付,绕过一些坑/"/>
+
+  <title> iOS集成Ping++支付,绕过一些坑 | WeiTing Zhang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">WeiTing Zhang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">iOS Developer</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS集成Ping++支付,绕过一些坑
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-31T20:18:50+08:00" content="2016-08-31">
+              2016-08-31
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>这一段时间比较忙，主要公司的产品需要重构与加多一个货币支付系统。说到移动端的支付，自然会牵扯到支付这一块。支付这一块主流的目前就微信、支付宝、银联。做过这些SDK集成的开发者都知道，集成相对复杂，而且要花大量的时间去阅读他们提供的开发文档，不过还好现在有很多开发者都分享了他们的集成心得，使这件事越发简单，比如：<a href="http://www.jianshu.com/p/97d38b00e53d" target="_blank" rel="external">iOS支付[支付宝、银联、微信]</a>、<a href="http://www.jianshu.com/p/6d67cfe0f00c" target="_blank" rel="external">10分钟搞定支付宝和微信支付 的 各种填坑</a>等等，但是呢，其实还有更加简单的,<a href="https://www.pingxx.com/docs/overview" target="_blank" rel="external">Ping++</a>。<br><a id="more"></a></p>
+<h4 id="Ping-能干嘛？"><a href="#Ping-能干嘛？" class="headerlink" title="Ping++能干嘛？"></a>Ping++能干嘛？</h4><p>Ping++ 是为移动端应用以及 PC 网页量身打造的下一代支付系统，通过一个 SDK 便可以同时支持移动端以及 PC 端网页的多种主流支付渠道，你只需要一次接入即可完成多个渠道的接入。 Ping++ SDK 包括 Client SDK 和 Server SDK 两部分，支持主流的七种后端开发语言，适配了 Android，iOS 和 HTML5 三种移动端平台以及 PC 端网页。ps：官方原话。</p>
+<p>说说我的理解：<br>我觉得最方便的是，不需要移动端填写各种appkey，各种秘钥，像支付宝支付有秘钥特别麻烦，这一些繁琐的事情Ping++都帮你做了，你只要把这些申请下来的key保存在Ping++的配置信息系统就可以了。还要申请开通一些权限，不过这些操作都是我老大弄的，不过很方便就是了。<br>还有就是一行代码就可以调起各种支付这个对做过各种原生支付SDK的我，感觉很清爽，贴下代码，感受下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[Pingpp createPayment:charge</div><div class="line">viewController:weakSelf</div><div class="line">appURLScheme:kUrlScheme</div><div class="line">withCompletion:^(NSString *result, PingppError *error) &#123;</div><div class="line">NSLog(@&quot;completion block: %@&quot;, result);</div><div class="line">if (error == nil) &#123;</div><div class="line">NSLog(@&quot;PingppError is nil&quot;);</div><div class="line">&#125; else &#123;</div><div class="line">NSLog(@&quot;PingppError: code=%lu msg=%@&quot;,</div><div class="line">(unsigned long)error.code, [error getMsg]);</div><div class="line">&#125;</div><div class="line">[weakSelf showAlertMessage:result];</div><div class="line">&#125;];</div></pre></td></tr></table></figure></p>
+<h4 id="使用方法："><a href="#使用方法：" class="headerlink" title="使用方法："></a>使用方法：</h4><p>1、使用 CocoaPods<br>在 Podfile 添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod &apos;Pingpp&apos;, &apos;~&gt; 2.2.6&apos;</div></pre></td></tr></table></figure></p>
+<p>2、手动引入<br>下载 <a href="https://github.com/PingPlusPlus/pingpp-ios" target="_blank" rel="external">iOS SDK</a> 到本地，里面包含 lib 和 example 两个目录。example 目录下的是示例项目，你需要将 lib 目录下的文件添加到你的项目。<br>具体可以看Ping++的<a href="https://www.pingxx.com/docs/client/sdk/ios" target="_blank" rel="external">iOS SDK 接入指南</a>。</p>
+<h4 id="说说我遇到的坑："><a href="#说说我遇到的坑：" class="headerlink" title="说说我遇到的坑："></a>说说我遇到的坑：</h4><p>首先说下微信支付的SDK再Ping++的Channels是显示Mmdpay的，刚开始害我找半天…有点夸张哈</p>
+<p><img src="/images/SDK包.png" alt=""><br>我这里由于暂时只用到这两种支付，所以我把其它的都删除掉了，现在app都提倡瘦身嘛。</p>
+<p>还有一点：<br>为了能正确获得结果回调请在工程 AppDelegate 文件中调用<code>[Pingpp handleOpenURL:url withCompletion:nil]</code>。<br>如果该方法的第二个参数传 nil，请在在 <code>createPayment</code> 方法的 <code>Completion</code> 中处理回调结果。否则，在这里处理结果。<br>如果你使用了微信分享、登录等一些看起来在这里“冲突”的模块，你可以先判断 url 的 host 来决定调用哪一方的方法。<br>也可以先调用 Ping++ 的方法，如果 return 的值为 false，表示这个 url 不是支付相关的，你再调用模块的方法。<br>贴上我解决这个问题的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// iOS 8 及以下请用这个</div><div class="line">- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation &#123;</div><div class="line">BOOL isPay = [Pingpp handleOpenURL:url withCompletion:nil];</div><div class="line">if(isPay)&#123;</div><div class="line">return isPay;</div><div class="line">&#125;else&#123;</div><div class="line">return  [UMSocialSnsService handleOpenURL:url wxApiDelegate:nil];</div><div class="line">&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里值得注意一下，每次调用<code>[Pingpp handleOpenURL:url withCompletion:nil]</code>就会执行一次<code>[Pingpp createPayment:(NSObject *) appURLScheme:&lt;#(NSString *)#&gt; withCompletion:&lt;#^(NSString *result, PingppError *error)completion#&gt;]</code>方法里的回调。<br>大概就是这一些了，后续可能还会继续添加更多的支付功能，如果遇到坑，我还会继续更新此文章。</p>
+<h4 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h4><p><a href="https://www.pingxx.com/docs/client/sdk/ios" target="_blank" rel="external">iOS SDK 接入指南</a><br><a href="http://www.jianshu.com/p/a933f9f74e9c" target="_blank" rel="external">iOS应用之 “Ping++” 支付集成</a><br><a href="http://www.jianshu.com/p/52dd853841b0" target="_blank" rel="external">Ping++ SDK，引入iOS配置说明</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/17/iOS Runtime特性之关联对象/" rel="next" title="iOS Runtime特性之关联对象">
+                <i class="fa fa-chevron-left"></i> iOS Runtime特性之关联对象
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="张威庭" />
+          <p class="site-author-name" itemprop="name">张威庭</p>
+          <p class="site-description motion-element" itemprop="description">「 少点虚的，多点实践 」</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Tate-zwt" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/0b178bfe372a/latest_articles" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ping-能干嘛？"><span class="nav-number">2.</span> <span class="nav-text">Ping++能干嘛？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用方法："><span class="nav-number">3.</span> <span class="nav-text">使用方法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#说说我遇到的坑："><span class="nav-number">4.</span> <span class="nav-text">说说我遇到的坑：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文章"><span class="nav-number">5.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张威庭</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

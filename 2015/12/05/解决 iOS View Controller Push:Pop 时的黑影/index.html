@@ -95,7 +95,7 @@
 <meta property="og:description" content="项目收尾的时候发现在push时右上角会有黑影，push完成后就消失了，如图：
 那么如何解决这个问题呢？">
 <meta property="og:image" content="https://tate-zwt.github.io/images/frist.jpeg">
-<meta property="og:updated_time" content="2016-08-29T12:04:33.000Z">
+<meta property="og:updated_time" content="2016-08-31T11:28:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决 iOS View Controller Push/Pop 时的黑影">
 <meta name="twitter:description" content="项目收尾的时候发现在push时右上角会有黑影，push完成后就消失了，如图：
@@ -182,16 +182,6 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
           </a>
         </li>
       
@@ -286,9 +276,9 @@
         <p>项目收尾的时候发现在push时右上角会有黑影，push完成后就消失了，如图：<br><img src="/images/frist.jpeg" alt=""></p>
 <h3 id="那么如何解决这个问题呢？"><a href="#那么如何解决这个问题呢？" class="headerlink" title="那么如何解决这个问题呢？"></a>那么如何解决这个问题呢？</h3><a id="more"></a>
 <p>　　上网查询而知，iOS 自 7.x 某个版本以后就有这个问题。</p>
-<p>实际上很简单，如果这个<code>ViewController</code> 是在 <code>TabBarViewController</code> 的 <code>NavigationController</code> 上 <code>Push/Pop</code>的，那么只需要把 <code>TabBarViewController 的 View</code> 设置一下白色背景就可以了。</p>
-<p>建立一个 <code>UINavigationController</code> 的父类，在父类写上<code>self.view.backgroundColor = [UIColor whiteColor];</code>让你的<code>NavigationController</code>都继承，这样就OK了。</p>
-<p>　　但是到这里为止，只解决了 50%，还有另外一种情况没有解决，那就是如果你 <code>present</code>了一个<code>NavigationController + ViewController</code>后，在这个下面再进行<code>Pop/Push</code> 也是会有黑影的情况下。这种情况如何解决呢？</p>
+<p>实际上很简单，如果这个<code>ViewController</code> 是在 <code>TabBarViewController</code> 的 <code>NavigationController</code> 上  <code>Push/Pop</code> 的，那么只需要把 <code>TabBarViewController 的 View</code>  设置一下白色背景就可以了。</p>
+<p>建立一个 <code>UINavigationController</code> 的父类，在父类写上 <code>self.view.backgroundColor = [UIColor whiteColor];</code> 让你的 <code>NavigationController</code> 都继承，这样就OK了。</p>
+<p>　　但是到这里为止，只解决了 50%，还有另外一种情况没有解决，那就是如果你 <code>present</code> 了一个 <code>NavigationController + ViewController</code> 后，在这个下面再进行 <code>Pop/Push</code> 也是会有黑影的情况下。这种情况如何解决呢？</p>
 <p>类似的，设置一下 <code>self.navigationController.view.backgroundColor = [UIColor whiteColor];</code> 即可。</p>
 
       

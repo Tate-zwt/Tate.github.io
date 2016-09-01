@@ -86,16 +86,19 @@
 
 
 
-<meta name="description" content="我们开发久了，Xcode的缓存会越来越大，主要是会产生很多项目编译缓存，占用一大堆硬盘空间，这个时候就要清理了。笔者有次清理出20多G的空间，这是相当给力的，你也可以试试哈😄。还有开发多款APP后可能会产生多余的证书provisioning profile，这个时候也是要清理的。12345678910111、清理Xcode编译项目产生的缓存垃圾手动删除：打开菜单的前往-&amp;gt;前往文件夹输入—&amp;">
+<meta name="description" content="我们开发久了，Xcode的缓存会越来越大，主要是会产生很多项目编译缓存，占用一大堆硬盘空间，这个时候就要清理了。笔者有次清理出20多G的空间，这是相当给力的，你也可以试试哈😄。还有开发多款APP后可能会产生多余的证书provisioning profile，这个时候也是要清理的。
+12345678910111、清理Xcode编译项目产生的缓存垃圾手动删除：打开菜单的前往-&amp;gt;前往文件夹输入—">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Xcode清理缓存、清理多余provisioning profile 证书">
 <meta property="og:url" content="https://tate-zwt.github.io/2015/10/05/Xcode清理缓存、清理多余provisioning-profile-证书/index.html">
 <meta property="og:site_name" content="WeiTing Zhang's Blog">
-<meta property="og:description" content="我们开发久了，Xcode的缓存会越来越大，主要是会产生很多项目编译缓存，占用一大堆硬盘空间，这个时候就要清理了。笔者有次清理出20多G的空间，这是相当给力的，你也可以试试哈😄。还有开发多款APP后可能会产生多余的证书provisioning profile，这个时候也是要清理的。12345678910111、清理Xcode编译项目产生的缓存垃圾手动删除：打开菜单的前往-&amp;gt;前往文件夹输入—&amp;">
-<meta property="og:updated_time" content="2016-08-29T10:59:15.000Z">
+<meta property="og:description" content="我们开发久了，Xcode的缓存会越来越大，主要是会产生很多项目编译缓存，占用一大堆硬盘空间，这个时候就要清理了。笔者有次清理出20多G的空间，这是相当给力的，你也可以试试哈😄。还有开发多款APP后可能会产生多余的证书provisioning profile，这个时候也是要清理的。
+12345678910111、清理Xcode编译项目产生的缓存垃圾手动删除：打开菜单的前往-&amp;gt;前往文件夹输入—">
+<meta property="og:updated_time" content="2016-09-01T02:46:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Xcode清理缓存、清理多余provisioning profile 证书">
-<meta name="twitter:description" content="我们开发久了，Xcode的缓存会越来越大，主要是会产生很多项目编译缓存，占用一大堆硬盘空间，这个时候就要清理了。笔者有次清理出20多G的空间，这是相当给力的，你也可以试试哈😄。还有开发多款APP后可能会产生多余的证书provisioning profile，这个时候也是要清理的。12345678910111、清理Xcode编译项目产生的缓存垃圾手动删除：打开菜单的前往-&amp;gt;前往文件夹输入—&amp;">
+<meta name="twitter:description" content="我们开发久了，Xcode的缓存会越来越大，主要是会产生很多项目编译缓存，占用一大堆硬盘空间，这个时候就要清理了。笔者有次清理出20多G的空间，这是相当给力的，你也可以试试哈😄。还有开发多款APP后可能会产生多余的证书provisioning profile，这个时候也是要清理的。
+12345678910111、清理Xcode编译项目产生的缓存垃圾手动删除：打开菜单的前往-&amp;gt;前往文件夹输入—">
 
 
 
@@ -177,16 +180,6 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
           </a>
         </li>
       
@@ -278,7 +271,8 @@
       
 
       
-        <p>我们开发久了，Xcode的缓存会越来越大，主要是会产生很多项目编译缓存，占用一大堆硬盘空间，这个时候就要清理了。笔者有次清理出20多G的空间，这是相当给力的，你也可以试试哈😄。还有开发多款APP后可能会产生多余的证书provisioning profile，这个时候也是要清理的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1、清理Xcode编译项目产生的缓存垃圾</div><div class="line"></div><div class="line">手动删除：</div><div class="line"></div><div class="line">打开菜单的前往-&gt;前往文件夹输入—&gt; ~/Library/Developer/Xcode/DerivedData</div><div class="line"></div><div class="line">2、删除Xcode中多余的证书provisioning profile</div><div class="line"></div><div class="line">手动删除：</div><div class="line"></div><div class="line">打开菜单的前往-&gt;前往文件夹输入—&gt; ~/Library/MobileDevice/Provisioning Profiles</div></pre></td></tr></table></figure></p>
+        <p>我们开发久了，Xcode的缓存会越来越大，主要是会产生很多项目编译缓存，占用一大堆硬盘空间，这个时候就要清理了。笔者有次清理出20多G的空间，这是相当给力的，你也可以试试哈😄。还有开发多款APP后可能会产生多余的证书provisioning profile，这个时候也是要清理的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1、清理Xcode编译项目产生的缓存垃圾</div><div class="line"></div><div class="line">手动删除：</div><div class="line"></div><div class="line">打开菜单的前往-&gt;前往文件夹输入—&gt; ~/Library/Developer/Xcode/DerivedData</div><div class="line"></div><div class="line">2、删除Xcode中多余的证书provisioning profile</div><div class="line"></div><div class="line">手动删除：</div><div class="line"></div><div class="line">打开菜单的前往-&gt;前往文件夹输入—&gt; ~/Library/MobileDevice/Provisioning Profiles</div></pre></td></tr></table></figure>
 <p>这样对于使用128G的固态MacPro 清理出一定的空间是相当有用的！</p>
 
       

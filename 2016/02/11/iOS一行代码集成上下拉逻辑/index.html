@@ -95,7 +95,7 @@ WTNetworkingRefreshManager这个是我自己封装的工具类，适用于UITabl
 <meta property="og:description" content="通常我们为了方便集成上拉下拉都会使用一些第三方的框架，但是它们大多只是提供了一些回调，初学者还是要写两个方法，分别是第一次加载与更多加载，在此，我分享下我平时项目里怎么去处理的。
 WTNetworkingRefreshManager这个是我自己封装的工具类，适用于UITableview、UICollectionView.">
 <meta property="og:image" content="https://tate-zwt.github.io/images/main.jpeg">
-<meta property="og:updated_time" content="2016-08-29T12:02:18.000Z">
+<meta property="og:updated_time" content="2016-09-01T02:45:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS一行代码集成上下拉逻辑">
 <meta name="twitter:description" content="通常我们为了方便集成上拉下拉都会使用一些第三方的框架，但是它们大多只是提供了一些回调，初学者还是要写两个方法，分别是第一次加载与更多加载，在此，我分享下我平时项目里怎么去处理的。
@@ -182,16 +182,6 @@ WTNetworkingRefreshManager这个是我自己封装的工具类，适用于UITabl
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
           </a>
         </li>
       
@@ -288,10 +278,10 @@ WTNetworkingRefreshManager这个是我自己封装的工具类，适用于UITabl
 <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><blockquote>
 <p>使用到的第三方框架<br><a href="https://github.com/AFNetworking/AFNetworking" target="_blank" rel="external">AFNetworking</a>  网络处理框架<br><a href="https://github.com/jdg/MBProgressHUD" target="_blank" rel="external">MBProgressHUD</a>  hud提示框框架<br><a href="https://github.com/CoderMJLee/MJExtension" target="_blank" rel="external">MJExtension</a>   字典转模型框架<br><a href="https://github.com/CoderMJLee/MJRefresh" target="_blank" rel="external">MJRefresh</a> 用法简单的下拉刷新框架</p>
 </blockquote>
-<h4 id="核心文件"><a href="#核心文件" class="headerlink" title="核心文件"></a>核心文件</h4><p><img src="/images/main.jpeg" alt="main"><br>UIViewController+WT  主要是对HUD的封装，一个category， WTNetworking 主要对AFNetworking进行进一步封装， WTNetworkingRefreshManager 提供了一些处理上下拉逻辑的方法，也可以根据自身项目的需求改动里面的代码</p>
-<h4 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h4><p>拖动WTNetworkingRefreshManager文件夹到你的项目里<br>确保项目里已经集成必备的框架<br>在需要用到的地方导入</p>
-<p>#import “WTNetworkingRefreshManager.h”</p>
-<p>在 WTNetworkingRefreshManager.h 根据自身设置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#define BeginPage (0)     //页数固定从1开始  （与当前后台设置的起始页数为准）</div><div class="line">#define PageParam @&quot;page&quot; //有页的概念时 请求后台页的字段固定</div><div class="line">#define RowsParam @&quot;rows&quot; //有页的概念时 请求后台每页的字段固定</div><div class="line">#define RowsNum (10)      //有页的概念时 每页多少条</div><div class="line">#define DataKey @&quot;dataList&quot; // 返回数据的对应Key,用来取值</div></pre></td></tr></table></figure></p>
+<h4 id="核心文件"><a href="#核心文件" class="headerlink" title="核心文件"></a>核心文件</h4><p><img src="/images/main.jpeg" alt="main"><br><code>UIViewController+WT</code>  主要是对HUD的封装，一个<code>category</code>，<code>WTNetworking</code>主要对<code>AFNetworking</code>进行进一步封装， <code>WTNetworkingRefreshManager</code> 提供了一些处理上下拉逻辑的方法，也可以根据自身项目的需求改动里面的代码</p>
+<h4 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h4><p>拖动<code>WTNetworkingRefreshManager</code>文件夹到你的项目里<br>确保项目里已经集成必备的框架<br>在需要用到的地方导入<code>import &quot;WTNetworkingRefreshManager.h&quot;</code></p>
+<p>在 <code>WTNetworkingRefreshManager.h</code> 根据自身设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#define BeginPage (0)     //页数固定从1开始  （与当前后台设置的起始页数为准）</div><div class="line">#define PageParam @&quot;page&quot; //有页的概念时 请求后台页的字段固定</div><div class="line">#define RowsParam @&quot;rows&quot; //有页的概念时 请求后台每页的字段固定</div><div class="line">#define RowsNum (10)      //有页的概念时 每页多少条</div><div class="line">#define DataKey @&quot;dataList&quot; // 返回数据的对应Key,用来取值</div></pre></td></tr></table></figure>
 <p>使用它提供的类方法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">*  类方法 -&gt; perfect 😀</div><div class="line">*  @param api       接口</div><div class="line">*  @param params    参数</div><div class="line">*  @param isPages   是否有页数</div><div class="line">*  @param view      UITableview、UICollectionView</div><div class="line">*  @param dataSoure 数据源</div><div class="line">*  @param superVc   所持有控制器</div><div class="line">*  @param manager   AFN</div><div class="line">*  @param modclass  模型</div><div class="line">*  @param success   成功回调</div><div class="line">*  @param fail      失败回调</div><div class="line">*/</div><div class="line">+ (void)api:(NSString *)api params:(NSDictionary *)params pages:(BOOL)isPages tv:(UIView *)view dataSoure:(NSMutableArray *)dataSoure vc:(UIViewController *)superVc af:(AFHTTPRequestOperationManager *)manager modClass:(Class)modclass suc:(NetSuccessBlock)success fail:(NetFailureBlock)fail;</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">*  处理用到的模型(可以自己定义)</div><div class="line">*/</div><div class="line">- (void)customHandleMod &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>

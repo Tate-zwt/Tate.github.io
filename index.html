@@ -182,16 +182,6 @@
         </li>
       
         
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
@@ -379,7 +369,7 @@
 
       
         
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>现在你准备用一个系统的类或者是你写的类，但是这个类并不能满足你的需求，你需要额外添加一个属性。<br>一般解决办法要么是 extends(继承)，要么使用 category(类别)。<br>而我并不推荐使用 extends ，主要是耦合性太强，一般我使用 category 。<br>我们都知道，分类中是无法设置属性的，如果在分类的声明中写@property 只能为其生成get 和 set 方法的声明，<br>但是有时候使用类别也需要增加一个额外属性，<br>那么怎么办呢？<br>这个时候，runtime的关联属性就能发挥它的作用了。<br>一般都是key value 的存在。<br>
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>现在你准备用一个系统的类或者是你写的类，但是这个类并不能满足你的需求，你需要额外添加一个属性。<br>一般解决办法要么是 <code>extends(继承)</code>，要么使用 <code>category(类别)</code>。<br>而我并不推荐使用 <code>extends</code> ，主要是耦合性太强，一般我使用 <code>category</code> 。<br>我们都知道，分类中是无法设置属性的，如果在分类的声明中写<code>@property</code> 只能为其生成<code>get</code> 和 <code>set</code> 方法的声明，<br>但是有时候使用类别也需要增加一个额外属性，<br>那么怎么办呢？<br>这个时候，<code>runtime</code>的关联属性就能发挥它的作用了。<br>一般都是<code>key value</code> 的存在。<br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/04/17/iOS Runtime特性之关联对象/#more" rel="contents">
               阅读全文 &raquo;
@@ -1062,7 +1052,8 @@
       
         
           
-            <p>我们开发久了，Xcode的缓存会越来越大，主要是会产生很多项目编译缓存，占用一大堆硬盘空间，这个时候就要清理了。笔者有次清理出20多G的空间，这是相当给力的，你也可以试试哈😄。还有开发多款APP后可能会产生多余的证书provisioning profile，这个时候也是要清理的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1、清理Xcode编译项目产生的缓存垃圾</div><div class="line"></div><div class="line">手动删除：</div><div class="line"></div><div class="line">打开菜单的前往-&gt;前往文件夹输入—&gt; ~/Library/Developer/Xcode/DerivedData</div><div class="line"></div><div class="line">2、删除Xcode中多余的证书provisioning profile</div><div class="line"></div><div class="line">手动删除：</div><div class="line"></div><div class="line">打开菜单的前往-&gt;前往文件夹输入—&gt; ~/Library/MobileDevice/Provisioning Profiles</div></pre></td></tr></table></figure></p>
+            <p>我们开发久了，Xcode的缓存会越来越大，主要是会产生很多项目编译缓存，占用一大堆硬盘空间，这个时候就要清理了。笔者有次清理出20多G的空间，这是相当给力的，你也可以试试哈😄。还有开发多款APP后可能会产生多余的证书provisioning profile，这个时候也是要清理的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1、清理Xcode编译项目产生的缓存垃圾</div><div class="line"></div><div class="line">手动删除：</div><div class="line"></div><div class="line">打开菜单的前往-&gt;前往文件夹输入—&gt; ~/Library/Developer/Xcode/DerivedData</div><div class="line"></div><div class="line">2、删除Xcode中多余的证书provisioning profile</div><div class="line"></div><div class="line">手动删除：</div><div class="line"></div><div class="line">打开菜单的前往-&gt;前往文件夹输入—&gt; ~/Library/MobileDevice/Provisioning Profiles</div></pre></td></tr></table></figure>
 <p>这样对于使用128G的固态MacPro 清理出一定的空间是相当有用的！</p>
 
           

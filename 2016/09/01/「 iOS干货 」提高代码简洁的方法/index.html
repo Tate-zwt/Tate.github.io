@@ -86,21 +86,26 @@
 
 
 
-<meta name="description" content="通常我们为了方便集成上拉下拉都会使用一些第三方的框架，但是它们大多只是提供了一些回调，初学者还是要写两个方法，分别是第一次加载与更多加载，在此，我分享下我平时项目里怎么去处理的。
-WTNetworkingRefreshManager这个是我自己封装的工具类，适用于UITableview、UICollectionView.">
+<meta name="description" content="前言开发项目的时候，常常会有一些代码重复而且冗余，在用的时候需要写很长的代码或者用的地方也多，所以这个时候就需要集中起来封装，使代码复用性强，用短短的几行代码搞定。这些方法我都封装在category、tools、View，加上代码里都有写注释，用起来很方便，实用性强，读起来也易懂，可以让代码更加的简洁。里面有一些也是参考别人源码，也做了下搬运工，希望对你们开发项目有所帮助。
+简介WTSDK看目录结">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS一行代码集成上下拉逻辑">
-<meta property="og:url" content="https://tate-zwt.github.io/2016/02/11/iOS一行代码集成上下拉逻辑/index.html">
+<meta property="og:title" content="「 iOS干货 」提高代码简洁的方法">
+<meta property="og:url" content="https://tate-zwt.github.io/2016/09/01/「 iOS干货 」提高代码简洁的方法/index.html">
 <meta property="og:site_name" content="WeiTing Zhang's Blog">
-<meta property="og:description" content="通常我们为了方便集成上拉下拉都会使用一些第三方的框架，但是它们大多只是提供了一些回调，初学者还是要写两个方法，分别是第一次加载与更多加载，在此，我分享下我平时项目里怎么去处理的。
-WTNetworkingRefreshManager这个是我自己封装的工具类，适用于UITableview、UICollectionView.">
-<meta property="og:image" content="https://tate-zwt.github.io/images/main.jpeg">
-<meta property="og:updated_time" content="2016-09-01T02:45:59.000Z">
+<meta property="og:description" content="前言开发项目的时候，常常会有一些代码重复而且冗余，在用的时候需要写很长的代码或者用的地方也多，所以这个时候就需要集中起来封装，使代码复用性强，用短短的几行代码搞定。这些方法我都封装在category、tools、View，加上代码里都有写注释，用起来很方便，实用性强，读起来也易懂，可以让代码更加的简洁。里面有一些也是参考别人源码，也做了下搬运工，希望对你们开发项目有所帮助。
+简介WTSDK看目录结">
+<meta property="og:image" content="https://tate-zwt.github.io/images/WTSDK目录.png">
+<meta property="og:image" content="https://tate-zwt.github.io/images/Category.png">
+<meta property="og:image" content="https://tate-zwt.github.io/images/NS.png">
+<meta property="og:image" content="https://tate-zwt.github.io/images/UI.png">
+<meta property="og:image" content="https://tate-zwt.github.io/images/Tool.png">
+<meta property="og:image" content="https://tate-zwt.github.io/images/View.png">
+<meta property="og:updated_time" content="2016-09-01T11:12:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS一行代码集成上下拉逻辑">
-<meta name="twitter:description" content="通常我们为了方便集成上拉下拉都会使用一些第三方的框架，但是它们大多只是提供了一些回调，初学者还是要写两个方法，分别是第一次加载与更多加载，在此，我分享下我平时项目里怎么去处理的。
-WTNetworkingRefreshManager这个是我自己封装的工具类，适用于UITableview、UICollectionView.">
-<meta name="twitter:image" content="https://tate-zwt.github.io/images/main.jpeg">
+<meta name="twitter:title" content="「 iOS干货 」提高代码简洁的方法">
+<meta name="twitter:description" content="前言开发项目的时候，常常会有一些代码重复而且冗余，在用的时候需要写很长的代码或者用的地方也多，所以这个时候就需要集中起来封装，使代码复用性强，用短短的几行代码搞定。这些方法我都封装在category、tools、View，加上代码里都有写注释，用起来很方便，实用性强，读起来也易懂，可以让代码更加的简洁。里面有一些也是参考别人源码，也做了下搬运工，希望对你们开发项目有所帮助。
+简介WTSDK看目录结">
+<meta name="twitter:image" content="https://tate-zwt.github.io/images/WTSDK目录.png">
 
 
 
@@ -121,9 +126,9 @@ WTNetworkingRefreshManager这个是我自己封装的工具类，适用于UITabl
 
 
 
-  <link rel="canonical" href="https://tate-zwt.github.io/2016/02/11/iOS一行代码集成上下拉逻辑/"/>
+  <link rel="canonical" href="https://tate-zwt.github.io/2016/09/01/「 iOS干货 」提高代码简洁的方法/"/>
 
-  <title> iOS一行代码集成上下拉逻辑 | WeiTing Zhang's Blog </title>
+  <title> 「 iOS干货 」提高代码简洁的方法 | WeiTing Zhang's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -233,7 +238,7 @@ WTNetworkingRefreshManager这个是我自己封装的工具类，适用于UITabl
             
             
               
-                iOS一行代码集成上下拉逻辑
+                「 iOS干货 」提高代码简洁的方法
               
             
           </h1>
@@ -245,8 +250,8 @@ WTNetworkingRefreshManager这个是我自己封装的工具类，适用于UITabl
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-02-11T19:23:44+08:00" content="2016-02-11">
-              2016-02-11
+            <time itemprop="dateCreated" datetime="2016-09-01T19:28:29+08:00" content="2016-09-01">
+              2016-09-01
             </time>
           </span>
 
@@ -273,20 +278,15 @@ WTNetworkingRefreshManager这个是我自己封装的工具类，适用于UITabl
       
 
       
-        <p>通常我们为了方便集成上拉下拉都会使用一些第三方的框架，但是它们大多只是提供了一些回调，初学者还是要写两个方法，分别是第一次加载与更多加载，在此，我分享下我平时项目里怎么去处理的。</p>
-<h4 id="WTNetworkingRefreshManager"><a href="#WTNetworkingRefreshManager" class="headerlink" title="WTNetworkingRefreshManager"></a>WTNetworkingRefreshManager</h4><p>这个是我自己封装的工具类，适用于UITableview、UICollectionView.<br><a id="more"></a></p>
-<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><blockquote>
-<p>使用到的第三方框架<br><a href="https://github.com/AFNetworking/AFNetworking" target="_blank" rel="external">AFNetworking</a>  网络处理框架<br><a href="https://github.com/jdg/MBProgressHUD" target="_blank" rel="external">MBProgressHUD</a>  hud提示框框架<br><a href="https://github.com/CoderMJLee/MJExtension" target="_blank" rel="external">MJExtension</a>   字典转模型框架<br><a href="https://github.com/CoderMJLee/MJRefresh" target="_blank" rel="external">MJRefresh</a> 用法简单的下拉刷新框架</p>
-</blockquote>
-<h4 id="核心文件"><a href="#核心文件" class="headerlink" title="核心文件"></a>核心文件</h4><p><img src="/images/main.jpeg" alt="main"><br><code>UIViewController+WT</code>  主要是对HUD的封装，一个<code>category</code>，<code>WTNetworking</code>主要对<code>AFNetworking</code>进行进一步封装， <code>WTNetworkingRefreshManager</code> 提供了一些处理上下拉逻辑的方法，也可以根据自身项目的需求改动里面的代码</p>
-<h4 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h4><p>拖动<code>WTNetworkingRefreshManager</code>文件夹到你的项目里<br>确保项目里已经集成必备的框架<br>在需要用到的地方导入<code>import &quot;WTNetworkingRefreshManager.h&quot;</code></p>
-<p>在 <code>WTNetworkingRefreshManager.h</code> 根据自身设置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#define BeginPage (0)     //页数固定从1开始  （与当前后台设置的起始页数为准）</div><div class="line">#define PageParam @&quot;page&quot; //有页的概念时 请求后台页的字段固定</div><div class="line">#define RowsParam @&quot;rows&quot; //有页的概念时 请求后台每页的字段固定</div><div class="line">#define RowsNum (10)      //有页的概念时 每页多少条</div><div class="line">#define DataKey @&quot;dataList&quot; // 返回数据的对应Key,用来取值</div></pre></td></tr></table></figure>
-<p>使用它提供的类方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">*  类方法 -&gt; perfect 😀</div><div class="line">*  @param api       接口</div><div class="line">*  @param params    参数</div><div class="line">*  @param isPages   是否有页数</div><div class="line">*  @param view      UITableview、UICollectionView</div><div class="line">*  @param dataSoure 数据源</div><div class="line">*  @param superVc   所持有控制器</div><div class="line">*  @param manager   AFN</div><div class="line">*  @param modclass  模型</div><div class="line">*  @param success   成功回调</div><div class="line">*  @param fail      失败回调</div><div class="line">*/</div><div class="line">+ (void)api:(NSString *)api params:(NSDictionary *)params pages:(BOOL)isPages tv:(UIView *)view dataSoure:(NSMutableArray *)dataSoure vc:(UIViewController *)superVc af:(AFHTTPRequestOperationManager *)manager modClass:(Class)modclass suc:(NetSuccessBlock)success fail:(NetFailureBlock)fail;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">*  处理用到的模型(可以自己定义)</div><div class="line">*/</div><div class="line">- (void)customHandleMod &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>具体可以参考源代码</p>
-<h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3><p>点击这下载<a href="https://github.com/Tate-zwt/WTNetworkingRefreshManager" target="_blank" rel="external">源代码</a>，欢迎点star</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>开发项目的时候，常常会有一些代码重复而且冗余，在用的时候需要写很长的代码或者用的地方也多，所以这个时候就需要集中起来封装，使代码复用性强，用短短的几行代码搞定。这些方法我都封装在<code>category、tools、View</code>，加上代码里都有写注释，用起来很方便，实用性强，读起来也易懂，可以让代码更加的简洁。里面有一些也是参考别人源码，也做了下搬运工，希望对你们开发项目有所帮助。</p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><h6 id="WTSDK"><a href="#WTSDK" class="headerlink" title="WTSDK"></a>WTSDK</h6><p><img src="/images/WTSDK目录.png" alt="WTSDK目录.png"><br>看目录结构就觉得清晰易懂，反正我是这么觉得的☺️</p>
+<h6 id="Category（分类）"><a href="#Category（分类）" class="headerlink" title="Category（分类）"></a>Category（分类）</h6><p><img src="/images/Category.png" alt="Category.png"></p>
+<h6 id="NS（NS前缀的分类）"><a href="#NS（NS前缀的分类）" class="headerlink" title="NS（NS前缀的分类）"></a>NS（NS前缀的分类）</h6><p><img src="/images/NS.png" alt="NS.png"></p>
+<h6 id="UI（UI前缀的分类）"><a href="#UI（UI前缀的分类）" class="headerlink" title="UI（UI前缀的分类）"></a>UI（UI前缀的分类）</h6><p><img src="/images/UI.png" alt="UI.png"><br>看<code>class名称</code>，它们都是对应对象的分类方法，里面扩展了很多实用性的功能，具体可以看源码。</p>
+<h6 id="Tool（工具类集合）"><a href="#Tool（工具类集合）" class="headerlink" title="Tool（工具类集合）"></a>Tool（工具类集合）</h6><p><img src="/images/Tool.png" alt="Tool.png"><br><code>Singleton</code>是一个单例模式的宏使用方法：<br>在<code>.h</code>里写上<code>singleton_interface(类名称)</code>与<code>.m</code>里写上<code>singleton_implementation(类名称)</code>即完美支持MRC和ARC下的单例使用。<br><code>WTConst</code>里面包括很多实用性很强的宏定义，具体看源码。<br><code>WTUtility</code>里面定义了很多实用性很强的类方法，具体看源码。</p>
+<h6 id="View（UITextField与UITextView）"><a href="#View（UITextField与UITextView）" class="headerlink" title="View（UITextField与UITextView）"></a>View（UITextField与UITextView）</h6><p><img src="/images/View.png" alt="View.png"><br><code>View</code>文件夹里包括<code>UITextField</code>与<code>UITextView</code>原生控件的封装。我一直觉得这两个原生控件每次用的时候都要加入好多的判断与代理方法，而且都是差不多一样的，所以我就针对这两个进行了封装，把常用的功能都集合在里面，比如限制文字输入长度等等，这样使用起来才更加的简洁。具体可以看下源码。</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>你可以看下<code>WTSDK</code>里面有啥需要的，单独拉某个文件到你的项目里使用即可。<br>如果你都要使用的话，直接导入<code>#import &quot;WTConst.h&quot;</code>即可。<br>注意如果用到<code>UIViewController+WT</code>还需要项目里有<a href="https://github.com/jdg/MBProgressHUD" target="_blank" rel="external">MBProgressHUD</a>这个库。</p>
+<p>####源码在这<br><a href="https://github.com/Tate-zwt/WTSDK" target="_blank" rel="external">GitHub</a> 如果你觉得不错的话，麻烦你点一下Star，thank you all!</p>
 
       
     </div>
@@ -312,17 +312,13 @@ WTNetworkingRefreshManager这个是我自己封装的工具类，适用于UITabl
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/02/02/iOS 集成极光推送，绕过一些坑/" rel="next" title="iOS 集成极光推送，绕过一些坑">
-                <i class="fa fa-chevron-left"></i> iOS 集成极光推送，绕过一些坑
+              <a href="/2016/08/31/iOS集成Ping++支付,绕过一些坑/" rel="next" title="iOS集成Ping++支付,绕过一些坑">
+                <i class="fa fa-chevron-left"></i> iOS集成Ping++支付,绕过一些坑
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/03/02/iOS播放GIF动画的几种方式/" rel="prev" title="iOS播放GIF动画的几种方式">
-                iOS播放GIF动画的几种方式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -449,7 +445,7 @@ WTNetworkingRefreshManager这个是我自己封装的工具类，适用于UITabl
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#WTNetworkingRefreshManager"><span class="nav-number">1.</span> <span class="nav-text">WTNetworkingRefreshManager</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍"><span class="nav-number"></span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#核心文件"><span class="nav-number">1.</span> <span class="nav-text">核心文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何使用"><span class="nav-number">2.</span> <span class="nav-text">如何使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码"><span class="nav-number"></span> <span class="nav-text">源码</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#WTSDK"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">WTSDK</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Category（分类）"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">Category（分类）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#NS（NS前缀的分类）"><span class="nav-number">2.0.0.3.</span> <span class="nav-text">NS（NS前缀的分类）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#UI（UI前缀的分类）"><span class="nav-number">2.0.0.4.</span> <span class="nav-text">UI（UI前缀的分类）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Tool（工具类集合）"><span class="nav-number">2.0.0.5.</span> <span class="nav-text">Tool（工具类集合）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#View（UITextField与UITextView）"><span class="nav-number">2.0.0.6.</span> <span class="nav-text">View（UITextField与UITextView）</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用方法"><span class="nav-number">3.</span> <span class="nav-text">使用方法</span></a></li></ol></div>
             
           </div>
         </section>

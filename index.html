@@ -230,6 +230,108 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/01/「 iOS干货 」提高代码简洁的方法/" itemprop="url">
+                  「 iOS干货 」提高代码简洁的方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-01T19:28:29+08:00" content="2016-09-01">
+              2016-09-01
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>开发项目的时候，常常会有一些代码重复而且冗余，在用的时候需要写很长的代码或者用的地方也多，所以这个时候就需要集中起来封装，使代码复用性强，用短短的几行代码搞定。这些方法我都封装在<code>category、tools、View</code>，加上代码里都有写注释，用起来很方便，实用性强，读起来也易懂，可以让代码更加的简洁。里面有一些也是参考别人源码，也做了下搬运工，希望对你们开发项目有所帮助。</p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><h6 id="WTSDK"><a href="#WTSDK" class="headerlink" title="WTSDK"></a>WTSDK</h6><p><img src="/images/WTSDK目录.png" alt="WTSDK目录.png"><br>看目录结构就觉得清晰易懂，反正我是这么觉得的☺️</p>
+<h6 id="Category（分类）"><a href="#Category（分类）" class="headerlink" title="Category（分类）"></a>Category（分类）</h6><p><img src="/images/Category.png" alt="Category.png"></p>
+<h6 id="NS（NS前缀的分类）"><a href="#NS（NS前缀的分类）" class="headerlink" title="NS（NS前缀的分类）"></a>NS（NS前缀的分类）</h6><p><img src="/images/NS.png" alt="NS.png"></p>
+<h6 id="UI（UI前缀的分类）"><a href="#UI（UI前缀的分类）" class="headerlink" title="UI（UI前缀的分类）"></a>UI（UI前缀的分类）</h6><p><img src="/images/UI.png" alt="UI.png"><br>看<code>class名称</code>，它们都是对应对象的分类方法，里面扩展了很多实用性的功能，具体可以看源码。</p>
+<h6 id="Tool（工具类集合）"><a href="#Tool（工具类集合）" class="headerlink" title="Tool（工具类集合）"></a>Tool（工具类集合）</h6><p><img src="/images/Tool.png" alt="Tool.png"><br><code>Singleton</code>是一个单例模式的宏使用方法：<br>在<code>.h</code>里写上<code>singleton_interface(类名称)</code>与<code>.m</code>里写上<code>singleton_implementation(类名称)</code>即完美支持MRC和ARC下的单例使用。<br><code>WTConst</code>里面包括很多实用性很强的宏定义，具体看源码。<br><code>WTUtility</code>里面定义了很多实用性很强的类方法，具体看源码。</p>
+<h6 id="View（UITextField与UITextView）"><a href="#View（UITextField与UITextView）" class="headerlink" title="View（UITextField与UITextView）"></a>View（UITextField与UITextView）</h6><p><img src="/images/View.png" alt="View.png"><br><code>View</code>文件夹里包括<code>UITextField</code>与<code>UITextView</code>原生控件的封装。我一直觉得这两个原生控件每次用的时候都要加入好多的判断与代理方法，而且都是差不多一样的，所以我就针对这两个进行了封装，把常用的功能都集合在里面，比如限制文字输入长度等等，这样使用起来才更加的简洁。具体可以看下源码。</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>你可以看下<code>WTSDK</code>里面有啥需要的，单独拉某个文件到你的项目里使用即可。<br>如果你都要使用的话，直接导入<code>#import &quot;WTConst.h&quot;</code>即可。<br>注意如果用到<code>UIViewController+WT</code>还需要项目里有<a href="https://github.com/jdg/MBProgressHUD" target="_blank" rel="external">MBProgressHUD</a>这个库。</p>
+<p>####源码在这<br><a href="https://github.com/Tate-zwt/WTSDK" target="_blank" rel="external">GitHub</a> 如果你觉得不错的话，麻烦你点一下Star，thank you all!</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/31/iOS集成Ping++支付,绕过一些坑/" itemprop="url">
                   iOS集成Ping++支付,绕过一些坑
                 </a>
@@ -596,103 +698,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/02/11/iOS一行代码集成上下拉逻辑/" itemprop="url">
-                  iOS一行代码集成上下拉逻辑
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-02-11T19:23:44+08:00" content="2016-02-11">
-              2016-02-11
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>通常我们为了方便集成上拉下拉都会使用一些第三方的框架，但是它们大多只是提供了一些回调，初学者还是要写两个方法，分别是第一次加载与更多加载，在此，我分享下我平时项目里怎么去处理的。</p>
-<h4 id="WTNetworkingRefreshManager"><a href="#WTNetworkingRefreshManager" class="headerlink" title="WTNetworkingRefreshManager"></a>WTNetworkingRefreshManager</h4><p>这个是我自己封装的工具类，适用于UITableview、UICollectionView.<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/02/11/iOS一行代码集成上下拉逻辑/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -738,20 +743,13 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           
 
-          
-            <div class="site-state-item site-state-tags">
-              
-                <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">标签</span>
-              
-            </div>
           
 
         </nav>

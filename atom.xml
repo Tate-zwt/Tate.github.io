@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://tate-zwt.github.io/"/>
-  <updated>2016-08-31T11:17:45.000Z</updated>
+  <updated>2016-09-01T11:12:44.000Z</updated>
   <id>https://tate-zwt.github.io/</id>
   
   <author>
@@ -14,6 +14,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>「 iOS干货 」提高代码简洁的方法</title>
+    <link href="https://tate-zwt.github.io/2016/09/01/%E3%80%8C%20iOS%E5%B9%B2%E8%B4%A7%20%E3%80%8D%E6%8F%90%E9%AB%98%E4%BB%A3%E7%A0%81%E7%AE%80%E6%B4%81%E7%9A%84%E6%96%B9%E6%B3%95/"/>
+    <id>https://tate-zwt.github.io/2016/09/01/「 iOS干货 」提高代码简洁的方法/</id>
+    <published>2016-09-01T11:28:29.000Z</published>
+    <updated>2016-09-01T11:12:44.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>开发项目的时候，常常会有一些代码重复而且冗余，在用的时候需要写很长的代码或者用的地方也多，所以这个时候就需要集中起来封装，使代码复用性强，用短短的几行代码搞定。这些方法我都封装在<code>category、tools、View</code>，加上代码里都有写注释，用起来很方便，实用性强，读起来也易懂，可以让代码更加的简洁。里面有一些也是参考别人源码，也做了下搬运工，希望对你们开发项目有所帮助。</p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><h6 id="WTSDK"><a href="#WTSDK" class="headerlink" title="WTSDK"></a>WTSDK</h6><p><img src="/images/WTSDK目录.png" alt="WTSDK目录.png"><br>看目录结构就觉得清晰易懂，反正我是这么觉得的☺️</p>
+<h6 id="Category（分类）"><a href="#Category（分类）" class="headerlink" title="Category（分类）"></a>Category（分类）</h6><p><img src="/images/Category.png" alt="Category.png"></p>
+<h6 id="NS（NS前缀的分类）"><a href="#NS（NS前缀的分类）" class="headerlink" title="NS（NS前缀的分类）"></a>NS（NS前缀的分类）</h6><p><img src="/images/NS.png" alt="NS.png"></p>
+<h6 id="UI（UI前缀的分类）"><a href="#UI（UI前缀的分类）" class="headerlink" title="UI（UI前缀的分类）"></a>UI（UI前缀的分类）</h6><p><img src="/images/UI.png" alt="UI.png"><br>看<code>class名称</code>，它们都是对应对象的分类方法，里面扩展了很多实用性的功能，具体可以看源码。</p>
+<h6 id="Tool（工具类集合）"><a href="#Tool（工具类集合）" class="headerlink" title="Tool（工具类集合）"></a>Tool（工具类集合）</h6><p><img src="/images/Tool.png" alt="Tool.png"><br><code>Singleton</code>是一个单例模式的宏使用方法：<br>在<code>.h</code>里写上<code>singleton_interface(类名称)</code>与<code>.m</code>里写上<code>singleton_implementation(类名称)</code>即完美支持MRC和ARC下的单例使用。<br><code>WTConst</code>里面包括很多实用性很强的宏定义，具体看源码。<br><code>WTUtility</code>里面定义了很多实用性很强的类方法，具体看源码。</p>
+<h6 id="View（UITextField与UITextView）"><a href="#View（UITextField与UITextView）" class="headerlink" title="View（UITextField与UITextView）"></a>View（UITextField与UITextView）</h6><p><img src="/images/View.png" alt="View.png"><br><code>View</code>文件夹里包括<code>UITextField</code>与<code>UITextView</code>原生控件的封装。我一直觉得这两个原生控件每次用的时候都要加入好多的判断与代理方法，而且都是差不多一样的，所以我就针对这两个进行了封装，把常用的功能都集合在里面，比如限制文字输入长度等等，这样使用起来才更加的简洁。具体可以看下源码。</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>你可以看下<code>WTSDK</code>里面有啥需要的，单独拉某个文件到你的项目里使用即可。<br>如果你都要使用的话，直接导入<code>#import &quot;WTConst.h&quot;</code>即可。<br>注意如果用到<code>UIViewController+WT</code>还需要项目里有<a href="https://github.com/jdg/MBProgressHUD" target="_blank" rel="external">MBProgressHUD</a>这个库。</p>
+<p>####源码在这<br><a href="https://github.com/Tate-zwt/WTSDK" target="_blank" rel="external">GitHub</a> 如果你觉得不错的话，麻烦你点一下Star，thank you all!</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;开发项目的时候，常常会有一些代码重复而且冗余，在用的时候需要写很长的代码或者用的地方也多，所以这个时候就需要集中起来封装，使代码复用性强，用
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>iOS集成Ping++支付,绕过一些坑</title>
@@ -48,7 +75,7 @@
     <link href="https://tate-zwt.github.io/2016/04/17/iOS%20Runtime%E7%89%B9%E6%80%A7%E4%B9%8B%E5%85%B3%E8%81%94%E5%AF%B9%E8%B1%A1/"/>
     <id>https://tate-zwt.github.io/2016/04/17/iOS Runtime特性之关联对象/</id>
     <published>2016-04-17T14:38:28.000Z</published>
-    <updated>2016-09-01T02:44:01.000Z</updated>
+    <updated>2016-09-01T10:59:03.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>现在你准备用一个系统的类或者是你写的类，但是这个类并不能满足你的需求，你需要额外添加一个属性。<br>一般解决办法要么是 <code>extends(继承)</code>，要么使用 <code>category(类别)</code>。<br>而我并不推荐使用 <code>extends</code> ，主要是耦合性太强，一般我使用 <code>category</code> 。<br>我们都知道，分类中是无法设置属性的，如果在分类的声明中写<code>@property</code> 只能为其生成<code>get</code> 和 <code>set</code> 方法的声明，<br>但是有时候使用类别也需要增加一个额外属性，<br>那么怎么办呢？<br>这个时候，<code>runtime</code>的关联属性就能发挥它的作用了。<br>一般都是<code>key value</code> 的存在。<br><a id="more"></a></p>
 <h3 id="有关的方法"><a href="#有关的方法" class="headerlink" title="有关的方法"></a>有关的方法</h3><blockquote>
@@ -72,8 +99,6 @@
     
     </summary>
     
-    
-      <category term="runtime" scheme="https://tate-zwt.github.io/tags/runtime/"/>
     
   </entry>
   
